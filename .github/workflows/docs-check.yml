@@ -1,0 +1,36 @@
+name: Docs integrity
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Required documents present
+        run: |
+          set -e
+          for f in README.md \
+                   docs/00-project-charter.md \
+                   docs/01-discovery-register.md \
+                   docs/02-frs-homepage-body.md \
+                   docs/03-approval-gate.md \
+                   docs/04-decision-log.md \
+                   docs/05-assumptions-open-questions.md \
+                   standards/definition-of-done.md; do
+            [ -f "$f" ] || { echo "MISSING: $f"; exit 1; }
+          done
+          echo "All required documents present."
+
+      - name: Report approval gate status
+        run: |
+          if grep -q "Gate status: CLOSED" docs/03-approval-gate.md; then
+            echo "::warning::Approval gate is CLOSED — design and build work is not authorised."
+          else
+            echo "Approval gate is open."
+          fi
+
+      - name: Flag TODO markers in the FRS
+        run: |
+          grep -n "TBD\|TODO" docs/02-frs-homepage-body.md || true

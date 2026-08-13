@@ -1,0 +1,14 @@
+node_modules/
+vendor/
+.DS_Store
+*.log
+.env
+.env.*
+dist/
+build/
+*.zip
+.idea/
+.vscode/
+pub/static/
+var/
+generated/
