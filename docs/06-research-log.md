@@ -46,3 +46,7 @@ on the domain, suggesting redesign work already partly in flight.
 | RS-004 | Magento full-page-cache strategies for segment-varied homepage content, and their SEO consequences | DEC-001, option 3 | Queued |
 | RS-005 | Hero carousel evidence: engagement distribution across slides, CWV cost | OQ-002 | Queued |
 | RS-006 | Indian MRP/GST price display obligations for mixed B2B/B2C storefronts | OQ-001, D-19 | Queued |
+| RS-007 | Core Web Vitals field data for the eleczo.com homepage, via CrUX / PageSpeed Insights | D-10, AS-008 | Queued — **independently obtainable, no access required**. CrUX is collected from real Chrome users and is unaffected by the HTTP 520 blocking automated fetchers |
+
+**Blocked:** RS-004 cannot start until D-12 is answered — Magento FPC and segment strategy differ
+by edition, so the research question is not yet well-formed.

@@ -53,7 +53,30 @@ Do not record an estimate as an answer.
 
 ## Access still required
 
-- Rendered export, screenshots, or an unblocked staging URL for the current homepage
-  (the live site returns HTTP 520 to automated fetchers, so no first-hand audit was possible).
-- Read access to the analytics property.
-- Repository access to the Magento theme/module code for the homepage.
+Tracked under **ACC-n** IDs. A stakeholder document dated 2026-08-14 proposed numbering these
+D15/D16/D17 — those IDs are already occupied above by different questions, so ACC-n is used
+instead. Repository IDs remain authoritative.
+
+| ID | Item | Status | Blocking? |
+|---|---|---|---|
+| ACC-1 | Staging environment / unblocked URL, or rendered export/screenshots of the current homepage | Outstanding | No — but needed before design validation |
+| ACC-2 | Repository access to the Magento theme/module code for the homepage | Outstanding | No — needed at design/build |
+| ACC-3 | Read access to the analytics property | Outstanding | **Yes — D-8 and gate condition G-2 depend on it** |
+| ACC-4 | Live site returns HTTP 520 to automated fetchers, so no first-hand audit was possible | Research constraint | No — recorded as AS-008, not as a finding |
+
+**On ACC-4:** do not read the 520 as evidence of a customer-facing fault. Bot mitigation and CDN
+edge policy are at least as likely. Recorded as AS-008 with a validation route.
+
+## Status of this register
+
+**19 issued, 0 answered.** A stakeholder document dated 2026-08-14 supplied *statuses and working
+positions* for D-1, D-2, D-5, D-8, D-12 and D-14 — it did not supply answers. Those working
+positions are recorded in `08-discovery-status-report.md` §2.1 and must not be read as answers.
+
+Two items are **transitively blocking** despite being marked `Blocking: No` above — reclassification
+is recommended to the approver in `08-discovery-status-report.md` §11, not applied here:
+
+- **D-6** — gate condition G-3 requires DEC-001, which is blocked on D-6
+- **D-18** — gate conditions G-6 and G-8 both require a named approver; nobody can sign without it
+
+Corrected count: **eight blocking items, not six** — D-1, D-2, D-5, D-6, D-8, D-12, D-14, D-18.
