@@ -1,0 +1,657 @@
+﻿<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eleczo Homepage Body â€” Unapproved Prototype</title>
+<meta name="description" content="Static prototype of the Eleczo homepage body. Unapproved: the project approval gate is closed and no FRS requirements exist.">
+<meta name="robots" content="noindex, nofollow">
+<style>
+/* Preview chrome only. NOT part of the deliverable â€” the deliverable is
+   design/homepage-body.html + design/homepage-body.css. */
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.pv-banner { background: #7a1420; color: #fff; padding: .85rem 1.25rem; font-size: .875rem; line-height: 1.5; }
+.pv-banner strong { display: block; font-size: .95rem; margin-bottom: .15rem; }
+.pv-banner a { color: #ffd9a0; }
+.pv-stub { background: #eef1f5; border-block: 1px dashed #9aa4b1; color: #55606e;
+           padding: 1rem 1.25rem; font-size: .8125rem; text-align: center; letter-spacing: .04em; }
+</style>
+<link rel="stylesheet" href="design/homepage-body.css">
+</head>
+<body>
+
+<div class="pv-banner">
+  <strong>Unapproved prototype â€” not authorised for release</strong>
+  Built while <code>docs/03-approval-gate.md</code> is <b>CLOSED</b>. It implements no
+  <code>RQ-nnn</code> requirement, because none exist. Composition, modules and copy rest on
+  stated assumptions, not evidence &mdash; see
+  <a href="https://github.com/shivaeleczo/Eleczo-Home-Page-Design/blob/main/design/README.md">design/README.md</a>.
+</div>
+
+<div class="pv-stub">GLOBAL HEADER &mdash; OUT OF SCOPE (charter section 3)</div>
+<!-- ==========================================================================
+     Eleczo — Homepage Body
+     UNAPPROVED PROTOTYPE. docs/03-approval-gate.md is CLOSED.
+     Implements no RQ-nnn — none exist. Rationale + assumptions: design/README.md
+
+     SCOPE: the region between the global header and the global footer only.
+     Header, nav, mega-menu and footer are out of scope (charter section 3).
+
+     PASTE TARGET: Magento CMS page/block content, or a Page Builder HTML element.
+     Stylesheet: design/homepage-body.css — do not inline it into the block.
+
+     URLs are plain relative paths so this pastes and runs unmodified. To route
+     them through Magento's URL resolver, swap href="/switchgear.html" for
+     href="{{store url='switchgear.html'}}".
+
+     NUMBERS MARKED [UNVERIFIED] come from RS-001 public sources and are recorded
+     as AS-005. Substantiate or remove before this goes near production —
+     standards/seo-technical.md forbids unsubstantiated scale claims.
+     ========================================================================== -->
+
+<div class="ecz-body">
+  <a class="ecz-skip" href="#ecz-categories">Skip to product categories</a>
+
+  <!-- ====================================================================
+       HERO — search-first, static.
+       No carousel: OQ-002 is unresolved and charter 5.2 makes carousels
+       candidates, not defaults. A static hero also protects LCP and CLS.
+       CACHING: fully cacheable.
+       ==================================================================== -->
+  <section class="ecz-hero" aria-labelledby="ecz-hero-title">
+    <div class="ecz-wrap ecz-hero__grid">
+      <div>
+        <h1 id="ecz-hero-title">
+          Electrical products, switchgear and cables for trade and home
+        </h1>
+        <p class="ecz-hero__lede">
+          Search by part number, browse by specification, or request a quotation for
+          bulk and project requirements.
+        </p>
+
+        <!-- Search. Label is persistent and associated; placeholder is not a label. -->
+        <form class="ecz-search" action="/catalogsearch/result/" method="get" role="search">
+          <label class="ecz-search__label" for="ecz-q">
+            Search products, part numbers or brands
+          </label>
+          <div class="ecz-search__row">
+            <input
+              class="ecz-search__input"
+              id="ecz-q"
+              name="q"
+              type="search"
+              autocomplete="off"
+              placeholder="e.g. MCCB 630A 4P 36kA"
+              aria-describedby="ecz-q-hint">
+            <button class="ecz-btn ecz-btn--accent" type="submit">
+              <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+              </svg>
+              Search
+            </button>
+          </div>
+          <p class="ecz-search__hint" id="ecz-q-hint">
+            Part numbers welcome — try <code>MCCB 630A 4P 36kA</code> or <code>NSX250F</code>
+          </p>
+        </form>
+
+        <ul class="ecz-hero__quick">
+          <li>
+            <a class="ecz-chip" href="/bulk-enquiry">
+              <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 6h16M4 12h16M4 18h10"></path>
+              </svg>
+              Bulk enquiry
+            </a>
+          </li>
+          <li>
+            <a class="ecz-chip" href="/quotation-request">
+              <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path>
+                <path d="M14 3v5h5"></path>
+              </svg>
+              Request a quotation
+            </a>
+          </li>
+          <li>
+            <a class="ecz-chip" href="/customer/account/login/">
+              <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3 12h12"></path><path d="m11 8 4 4-4 4"></path>
+                <path d="M15 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"></path>
+              </svg>
+              Reorder from account
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Factual proof strip. NOT a hero image — avoids the LCP cost while
+           the real above-fold asset budget (200KB) is unconfirmed. -->
+      <ul class="ecz-hero__proof">
+        <li class="ecz-proof__item">
+          <!-- [UNVERIFIED] AS-005 -->
+          <span class="ecz-proof__n">50,000+</span>
+          <span class="ecz-proof__t">Products listed</span>
+        </li>
+        <li class="ecz-proof__item">
+          <!-- [UNVERIFIED] AS-005 -->
+          <span class="ecz-proof__n">40+</span>
+          <span class="ecz-proof__t">Brands</span>
+        </li>
+        <li class="ecz-proof__item">
+          <!-- [UNVERIFIED] AS-005 -->
+          <span class="ecz-proof__n">600+</span>
+          <span class="ecz-proof__t">Certified sellers</span>
+        </li>
+        <li class="ecz-proof__item">
+          <span class="ecz-proof__n">GST</span>
+          <span class="ecz-proof__t">Invoicing on every order</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SEGMENT ROUTING RAILS — DEC-001 Option 1.
+       Fixed body with routing rails, NOT state-adaptive. Option 3 cannot be
+       specified until D-12 and D-14 are answered, so the cacheable option
+       is used and the routing is explicit rather than inferred.
+       CACHING: fully cacheable.
+       ==================================================================== -->
+  <section class="ecz-section" aria-labelledby="ecz-rails-title">
+    <div class="ecz-wrap">
+      <div class="ecz-section__head">
+        <div>
+          <h2 class="ecz-section__title" id="ecz-rails-title">Find your route</h2>
+          <p class="ecz-section__intro">
+            Trade buyers and home customers need different things from this page.
+            Pick the path that fits — nothing is hidden either way.
+          </p>
+        </div>
+      </div>
+
+      <div class="ecz-rails">
+        <!-- AUD-1..AUD-5 -->
+        <div class="ecz-rail ecz-rail--trade">
+          <p class="ecz-rail__tag">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 21h18"></path><path d="M5 21V7l7-4 7 4v14"></path><path d="M10 21v-6h4v6"></path>
+            </svg>
+            For trade
+          </p>
+          <h3 class="ecz-rail__title">OEMs, panel builders, contractors and dealers</h3>
+          <p class="ecz-rail__desc">
+            Specification-led buying, multi-line orders, and repeat procurement.
+          </p>
+          <ul class="ecz-rail__list">
+            <li>
+              <a href="/bulk-enquiry">
+                <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5L20 7"></path></svg>
+                Bulk and project enquiries
+              </a>
+            </li>
+            <li>
+              <a href="/quotation-request">
+                <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5L20 7"></path></svg>
+                Request a quotation against a BOM
+              </a>
+            </li>
+            <li>
+              <a href="/switchgear.html">
+                <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5L20 7"></path></svg>
+                Switchgear by rating and breaking capacity
+              </a>
+            </li>
+            <li>
+              <a href="/customer/account/">
+                <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5L20 7"></path></svg>
+                Reorder from purchase history
+              </a>
+            </li>
+          </ul>
+          <p class="ecz-rail__cta">
+            <a class="ecz-btn ecz-btn--primary" href="/trade">Open a trade account</a>
+          </p>
+        </div>
+
+        <!-- AUD-6, AUD-7 -->
+        <div class="ecz-rail ecz-rail--consumer">
+          <p class="ecz-rail__tag">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M9 22V12h6v10"></path>
+            </svg>
+            For home
+          </p>
+          <h3 class="ecz-rail__title">Homeowners and self-builders</h3>
+          <p class="ecz-rail__desc">
+            Replacing a fitting, wiring a room, or specifying a new build.
+          </p>
+          <ul class="ecz-rail__list">
+            <li>
+              <a href="/switches-sockets.html">
+                <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5L20 7"></path></svg>
+                Switches, sockets and modular plates
+              </a>
+            </li>
+            <li>
+              <a href="/lighting.html">
+                <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5L20 7"></path></svg>
+                Lighting and ceiling fans
+              </a>
+            </li>
+            <li>
+              <a href="/guides/choose-mcb-rating">
+                <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5L20 7"></path></svg>
+                How to choose the right MCB rating
+              </a>
+            </li>
+            <li>
+              <a href="/guides/home-wiring-checklist">
+                <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5L20 7"></path></svg>
+                Home wiring checklist
+              </a>
+            </li>
+          </ul>
+          <p class="ecz-rail__cta">
+            <a class="ecz-btn ecz-btn--ghost" href="/guides">Browse buying guides</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       CATEGORY ORIENTATION
+       Trade vocabulary preserved exactly (standards/seo-technical.md 2).
+       Descriptive anchor text, never "click here".
+       CACHING: fully cacheable.
+       ==================================================================== -->
+  <section class="ecz-section ecz-section--tint" id="ecz-categories" aria-labelledby="ecz-cats-title">
+    <div class="ecz-wrap">
+      <div class="ecz-section__head">
+        <div>
+          <h2 class="ecz-section__title" id="ecz-cats-title">Shop by category</h2>
+          <p class="ecz-section__intro">
+            Filter by rating, pole count and breaking capacity inside each category.
+          </p>
+        </div>
+        <a class="ecz-link" href="/categories">
+          All categories
+          <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"></path></svg>
+        </a>
+      </div>
+
+      <div class="ecz-cats">
+        <article class="ecz-cat">
+          <span class="ecz-cat__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M9 8h6M9 12h6M9 16h3"></path>
+            </svg>
+          </span>
+          <h3 class="ecz-cat__title"><a href="/switchgear/mccb.html">MCCBs</a></h3>
+          <p class="ecz-cat__spec">16A&ndash;1600A &middot; 3P/4P &middot; 25&ndash;70kA</p>
+          <p class="ecz-cat__count">Moulded case circuit breakers</p>
+        </article>
+
+        <article class="ecz-cat">
+          <span class="ecz-cat__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M13 2 4 14h6l-1 8 9-12h-6z"></path>
+            </svg>
+          </span>
+          <h3 class="ecz-cat__title"><a href="/switchgear/mcb.html">MCBs and RCCBs</a></h3>
+          <p class="ecz-cat__spec">6A&ndash;63A &middot; B/C/D curve &middot; 30mA</p>
+          <p class="ecz-cat__count">Miniature breakers and earth leakage protection</p>
+        </article>
+
+        <article class="ecz-cat">
+          <span class="ecz-cat__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 7h16v10H4z"></path><path d="M8 7V4M16 7V4M8 20v-3M16 20v-3"></path>
+            </svg>
+          </span>
+          <h3 class="ecz-cat__title"><a href="/switchgear/acb.html">ACBs</a></h3>
+          <p class="ecz-cat__spec">630A&ndash;6300A &middot; fixed and draw-out</p>
+          <p class="ecz-cat__count">Air circuit breakers</p>
+        </article>
+
+        <article class="ecz-cat">
+          <span class="ecz-cat__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 4v6a6 6 0 0 0 12 0V4"></path><path d="M12 16v4"></path>
+            </svg>
+          </span>
+          <h3 class="ecz-cat__title"><a href="/control-gear/contactors.html">Contactors and relays</a></h3>
+          <p class="ecz-cat__spec">9A&ndash;800A &middot; AC-1/AC-3 &middot; coil 24V&ndash;415V</p>
+          <p class="ecz-cat__count">Motor control and switching</p>
+        </article>
+
+        <article class="ecz-cat">
+          <span class="ecz-cat__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 12h4l3-8 4 16 3-8h4"></path>
+            </svg>
+          </span>
+          <h3 class="ecz-cat__title"><a href="/wires-cables.html">Wires and cables</a></h3>
+          <p class="ecz-cat__spec">1.0&ndash;400 sq mm &middot; FR/FRLS/XLPE</p>
+          <p class="ecz-cat__count">Building wire, armoured and flexible cable</p>
+        </article>
+
+        <article class="ecz-cat">
+          <span class="ecz-cat__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 9h4v6H7zM15 9h2M15 13h2"></path>
+            </svg>
+          </span>
+          <h3 class="ecz-cat__title"><a href="/distribution-boards.html">Distribution boards</a></h3>
+          <p class="ecz-cat__spec">4&ndash;24 way &middot; SPN/TPN &middot; IP42&ndash;IP65</p>
+          <p class="ecz-cat__count">Enclosures and consumer units</p>
+        </article>
+
+        <article class="ecz-cat">
+          <span class="ecz-cat__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="5" y="3" width="14" height="18" rx="2"></rect><circle cx="12" cy="12" r="2"></circle>
+            </svg>
+          </span>
+          <h3 class="ecz-cat__title"><a href="/switches-sockets.html">Switches and sockets</a></h3>
+          <p class="ecz-cat__spec">6A&ndash;32A &middot; modular &middot; 1&ndash;18 module plates</p>
+          <p class="ecz-cat__count">Wiring accessories and plates</p>
+        </article>
+
+        <article class="ecz-cat">
+          <span class="ecz-cat__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9 18h6M10 22h4"></path><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"></path>
+            </svg>
+          </span>
+          <h3 class="ecz-cat__title"><a href="/lighting.html">Lighting</a></h3>
+          <p class="ecz-cat__spec">LED panels, battens, flood and street</p>
+          <p class="ecz-cat__count">Indoor, outdoor and industrial</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       BRANDS — text-bearing links. Bare logo images with no accessible name
+       are prohibited by standards/seo-technical.md and accessibility.md.
+       CACHING: fully cacheable.
+       ==================================================================== -->
+  <section class="ecz-section" aria-labelledby="ecz-brands-title">
+    <div class="ecz-wrap">
+      <div class="ecz-section__head">
+        <div>
+          <h2 class="ecz-section__title" id="ecz-brands-title">Shop by brand</h2>
+          <p class="ecz-section__intro">Sourced through authorised channels.</p>
+        </div>
+        <a class="ecz-link" href="/brands">
+          All brands
+          <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"></path></svg>
+        </a>
+      </div>
+
+      <ul class="ecz-brands">
+        <li><a class="ecz-brand" href="/brands/havells">Havells</a></li>
+        <li><a class="ecz-brand" href="/brands/siemens">Siemens</a></li>
+        <li><a class="ecz-brand" href="/brands/schneider-electric">Schneider Electric</a></li>
+        <li><a class="ecz-brand" href="/brands/l-and-t">L&amp;T</a></li>
+        <li><a class="ecz-brand" href="/brands/socomec">Socomec</a></li>
+        <li><a class="ecz-brand" href="/brands/abb">ABB</a></li>
+        <li><a class="ecz-brand" href="/brands/legrand">Legrand</a></li>
+        <li><a class="ecz-brand" href="/brands/polycab">Polycab</a></li>
+        <li><a class="ecz-brand" href="/brands/finolex">Finolex</a></li>
+        <li><a class="ecz-brand" href="/brands/anchor">Anchor</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       TRADE TOOLS
+       CACHING: this band is fully cacheable as written. If an account-state
+       variant is added later ("your last order", credit terms), that block
+       is hole-punched via private content / ESI. NEVER cacheable="false" —
+       it disables FPC for the whole homepage (standards/magento-standards.md).
+       ==================================================================== -->
+  <section class="ecz-section ecz-tools" aria-labelledby="ecz-tools-title">
+    <div class="ecz-wrap">
+      <div class="ecz-section__head">
+        <div>
+          <h2 class="ecz-section__title" id="ecz-tools-title">Procurement tools</h2>
+          <p class="ecz-section__intro">
+            For repeat buyers ordering against a bill of materials or a project schedule.
+          </p>
+        </div>
+      </div>
+
+      <div class="ecz-tools__grid">
+        <article class="ecz-tool">
+          <span class="ecz-tool__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M4 21h16"></path>
+            </svg>
+          </span>
+          <h3>Upload a BOM</h3>
+          <p>Send a bill of materials as CSV or Excel and receive a line-by-line quotation.</p>
+          <a class="ecz-btn ecz-btn--accent" href="/bom-upload">Upload a BOM</a>
+        </article>
+
+        <article class="ecz-tool">
+          <span class="ecz-tool__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M8 2v4M16 2v4M3 10h18"></path>
+            </svg>
+          </span>
+          <h3>Project scheduling</h3>
+          <p>Stage deliveries against a site programme instead of taking everything at once.</p>
+          <a class="ecz-btn ecz-btn--on-dark" href="/project-orders">Discuss a project</a>
+        </article>
+
+        <article class="ecz-tool">
+          <span class="ecz-tool__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M20 7H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h16z"></path>
+              <path d="M3 7v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7"></path><path d="M14 12h4"></path>
+            </svg>
+          </span>
+          <h3>Trade account</h3>
+          <p>GST invoicing, saved delivery addresses and reorder from purchase history.</p>
+          <a class="ecz-btn ecz-btn--on-dark" href="/trade">Open a trade account</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       TRUST SIGNALS
+       Every claim below must be substantiable before production
+       (standards/seo-technical.md). No superlatives used.
+       CACHING: fully cacheable.
+       ==================================================================== -->
+  <section class="ecz-section ecz-section--tint" aria-labelledby="ecz-trust-title">
+    <div class="ecz-wrap">
+      <h2 class="ecz-section__title ecz-vh" id="ecz-trust-title">Why buy from Eleczo</h2>
+      <ul class="ecz-trust">
+        <li class="ecz-trust__item">
+          <span class="ecz-trust__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6z"></path><path d="m9 12 2 2 4-4"></path>
+            </svg>
+          </span>
+          <div>
+            <h3>Authorised sourcing</h3>
+            <p>Products supplied through authorised distribution channels.</p>
+          </div>
+        </li>
+
+        <li class="ecz-trust__item">
+          <span class="ecz-trust__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path>
+              <path d="M14 3v5h5M9 13h6M9 17h4"></path>
+            </svg>
+          </span>
+          <div>
+            <h3>GST invoicing</h3>
+            <p>Compliant tax invoices issued on every order, for input credit.</p>
+          </div>
+        </li>
+
+        <li class="ecz-trust__item">
+          <span class="ecz-trust__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path>
+              <circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle>
+            </svg>
+          </span>
+          <div>
+            <h3>Pan-India delivery</h3>
+            <p>Dispatch across India, with tracking from despatch to receipt.</p>
+          </div>
+        </li>
+
+        <li class="ecz-trust__item">
+          <span class="ecz-trust__icon">
+            <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4L3 21l1.1-9A8.4 8.4 0 1 1 21 11.5z"></path>
+            </svg>
+          </span>
+          <div>
+            <h3>Technical support</h3>
+            <p>Specification help from people who know the product range.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       GUIDANCE — serves AUD-6 and AUD-7, and carries specification-demand
+       search traffic onward into categories.
+       CACHING: fully cacheable.
+       ==================================================================== -->
+  <section class="ecz-section" aria-labelledby="ecz-guides-title">
+    <div class="ecz-wrap">
+      <div class="ecz-section__head">
+        <div>
+          <h2 class="ecz-section__title" id="ecz-guides-title">Buying guides</h2>
+          <p class="ecz-section__intro">
+            Written for people specifying a product, not for search engines.
+          </p>
+        </div>
+        <a class="ecz-link" href="/guides">
+          All guides
+          <svg class="ecz-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"></path></svg>
+        </a>
+      </div>
+
+      <div class="ecz-guides">
+        <article class="ecz-guide">
+          <p class="ecz-guide__kicker">Protection</p>
+          <h3><a href="/guides/mccb-vs-mcb">MCCB or MCB — which do you actually need?</a></h3>
+          <p>Current rating, breaking capacity and where each belongs in a distribution design.</p>
+        </article>
+
+        <article class="ecz-guide">
+          <p class="ecz-guide__kicker">Cable sizing</p>
+          <h3><a href="/guides/cable-sizing">Sizing a cable for load and length</a></h3>
+          <p>Derating, voltage drop and the mistakes that show up on commissioning.</p>
+        </article>
+
+        <article class="ecz-guide">
+          <p class="ecz-guide__kicker">Safety</p>
+          <h3><a href="/guides/rccb-rcbo">RCCB, RCBO and earth leakage protection</a></h3>
+          <p>30mA versus 100mA, and where each is appropriate in a domestic board.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SEO CONTENT REGION
+       Must be useful to a reader. Keyword-stuffed footer copy is a liability
+       (standards/seo-technical.md).
+       CACHING: fully cacheable.
+       ==================================================================== -->
+  <section class="ecz-section ecz-section--tint ecz-about" aria-labelledby="ecz-about-title">
+    <div class="ecz-wrap ecz-about__grid">
+      <div>
+        <h2 class="ecz-section__title" id="ecz-about-title">Buying electrical products online in India</h2>
+        <p>
+          Eleczo supplies electrical products to trade buyers and households across India —
+          switchgear, control gear, wires and cables, wiring accessories and lighting.
+          Trade customers order against drawings and bills of materials; households usually
+          arrive needing one replacement part and some guidance about which one.
+        </p>
+        <p>
+          Product listings carry the specification detail that matters for selection: current
+          rating, pole configuration, breaking capacity in kA, trip characteristics and
+          enclosure protection rating. Search accepts manufacturer part numbers directly,
+          so a known reference does not have to be translated into category navigation.
+        </p>
+
+        <h3>Ordering for a project</h3>
+        <p>
+          Bulk requirements are handled by quotation rather than list pricing. Send a bill of
+          materials and the response covers availability, lead time and delivery staging.
+        </p>
+      </div>
+
+      <div>
+        <h3>Popular categories</h3>
+        <ul class="ecz-about__links">
+          <li><a class="ecz-link" href="/switchgear/mccb.html">MCCBs</a></li>
+          <li><a class="ecz-link" href="/switchgear/mcb.html">MCBs</a></li>
+          <li><a class="ecz-link" href="/switchgear/acb.html">ACBs</a></li>
+          <li><a class="ecz-link" href="/wires-cables.html">Wires and cables</a></li>
+          <li><a class="ecz-link" href="/distribution-boards.html">Distribution boards</a></li>
+          <li><a class="ecz-link" href="/control-gear/contactors.html">Contactors</a></li>
+          <li><a class="ecz-link" href="/switches-sockets.html">Switches and sockets</a></li>
+          <li><a class="ecz-link" href="/lighting.html">Lighting</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ==========================================================================
+     STRUCTURED DATA
+     Organization and WebSite+SearchAction only. Product markup is deliberately
+     omitted: no products are presented on this page, and inaccurate markup is
+     worse than none (standards/seo-technical.md).
+     Replace the placeholder logo path before production.
+     ========================================================================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.eleczo.com/#organization",
+      "name": "Eleczo",
+      "legalName": "Mohan Exim India Private Limited",
+      "url": "https://www.eleczo.com/",
+      "logo": "https://www.eleczo.com/media/logo/eleczo-logo.png"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.eleczo.com/#website",
+      "url": "https://www.eleczo.com/",
+      "name": "Eleczo",
+      "publisher": { "@id": "https://www.eleczo.com/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.eleczo.com/catalogsearch/result/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script>
+<div class="pv-stub">GLOBAL FOOTER &mdash; OUT OF SCOPE (charter section 3)</div>
+
+</body>
+</html>

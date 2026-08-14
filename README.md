@@ -40,6 +40,7 @@ are blocked from producing design or code artefacts until the gate is signed.
 | `docs/06-research-log.md` | Evidence gathered, with sources and how it was used |
 | `docs/07-glossary.md` | Domain terms — electrical trade and platform |
 | `docs/08-discovery-status-report.md` | Discovery status: confirmed vs unknown, assumptions, stakeholder questions, next steps |
+| `design/` | **Unapproved prototype** — homepage body HTML/CSS, built against assumptions rather than requirements |
 | `agents/` | Role definitions for each AI agent and the handoff contract |
 | `standards/` | Binding standards: performance, accessibility, SEO, Magento, analytics, DoD |
 | `.github/` | PR and issue templates, CI |
@@ -70,3 +71,4 @@ RS-nn  Research finding
 | Evidence level | Nothing yet rests on evidence levels 1–4; all substantive items sit at level 5–8 |
 | FRS | Skeleton only |
 | Approval | Not sought — no approver named (D-18) |
+| Design prototype | Exists in `design/`, **unapproved** — built 2026-08-14 on owner instruction while the gate is closed. Implements no `RQ-nnn`. [Preview](https://shivaeleczo.github.io/Eleczo-Home-Page-Design/) |

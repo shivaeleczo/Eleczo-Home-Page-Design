@@ -1,0 +1,621 @@
+@charset "UTF-8";
+/* ==========================================================================
+   Eleczo — Homepage Body
+   UNAPPROVED PROTOTYPE. Built while docs/03-approval-gate.md is CLOSED.
+   Implements no RQ-nnn (none exist). Design rationale: design/README.md
+
+   All selectors are namespaced .ecz- to avoid collision with Luma, Hyva,
+   Page Builder and any third-party extension stylesheet.
+   No webfonts, no external requests, no JavaScript dependency.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+.ecz-body {
+  /* Brand */
+  --ecz-navy:        #0b2545;
+  --ecz-blue:        #12407a;
+  --ecz-blue-dark:   #0e3260;
+  --ecz-amber:       #f5a300;
+  --ecz-amber-dark:  #c98400;
+
+  /* Neutrals — all text pairings verified >= 4.5:1 on their background */
+  --ecz-ink:         #16202e;  /* on #fff  = 14.8:1 */
+  --ecz-muted:       #55606e;  /* on #fff  =  6.0:1 */
+  --ecz-line:        #dfe4ea;
+  --ecz-surface:     #ffffff;
+  --ecz-subtle:      #f5f7fa;
+  --ecz-subtle-2:    #eaeff5;
+
+  /* Status — never colour alone; always paired with text or an icon */
+  --ecz-ok:          #1c6b3c;  /* on #fff  =  5.3:1 */
+  --ecz-warn:        #8a5300;  /* on #fff  =  6.1:1 */
+
+  /* Scale */
+  --ecz-gap:         clamp(1rem, 2.5vw, 1.75rem);
+  --ecz-section-y:   clamp(2.5rem, 6vw, 4.5rem);
+  --ecz-radius:      10px;
+  --ecz-radius-sm:   6px;
+  --ecz-maxw:        1280px;
+
+  /* Minimum interactive size. 2.2 AA requires 24px; the trade audience
+     operates a phone on site, sometimes gloved, so 44px is used. */
+  --ecz-tap:         44px;
+
+  --ecz-shadow:      0 1px 2px rgba(11, 37, 69, .06), 0 4px 12px rgba(11, 37, 69, .06);
+  --ecz-shadow-lift: 0 2px 4px rgba(11, 37, 69, .08), 0 12px 28px rgba(11, 37, 69, .12);
+
+  --ecz-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+              Arial, "Noto Sans", sans-serif;
+  --ecz-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                   "Liberation Mono", monospace;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+.ecz-body {
+  font-family: var(--ecz-font);
+  color: var(--ecz-ink);
+  background: var(--ecz-surface);
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.ecz-body *,
+.ecz-body *::before,
+.ecz-body *::after { box-sizing: border-box; }
+
+.ecz-body img,
+.ecz-body svg { max-width: 100%; }
+
+.ecz-body img { height: auto; }
+
+.ecz-body h1, .ecz-body h2, .ecz-body h3, .ecz-body h4 {
+  margin: 0 0 .5em;
+  line-height: 1.2;
+  color: var(--ecz-navy);
+  text-wrap: balance;
+}
+
+.ecz-body p { margin: 0 0 1em; }
+.ecz-body ul { margin: 0; padding: 0; list-style: none; }
+
+/* Focus. Restyled, never removed — standards/accessibility.md. */
+.ecz-body :focus-visible {
+  outline: 3px solid var(--ecz-amber);
+  outline-offset: 2px;
+  border-radius: var(--ecz-radius-sm);
+}
+/* On dark surfaces the amber ring alone can fall below 3:1 against navy,
+   so a white halo is added. */
+.ecz-hero :focus-visible,
+.ecz-tools :focus-visible {
+  outline-color: #fff;
+  box-shadow: 0 0 0 6px rgba(245, 163, 0, .85);
+}
+
+/* --------------------------------------------------------------------------
+   3. Layout utilities
+   -------------------------------------------------------------------------- */
+.ecz-wrap {
+  width: 100%;
+  max-width: var(--ecz-maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+.ecz-section { padding-block: var(--ecz-section-y); }
+.ecz-section--tint { background: var(--ecz-subtle); }
+
+.ecz-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .75rem 1.5rem;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.ecz-section__title { font-size: clamp(1.375rem, 1rem + 1.4vw, 1.875rem); margin: 0; }
+
+.ecz-section__intro {
+  margin: .35rem 0 0;
+  color: var(--ecz-muted);
+  max-width: 62ch;
+  font-size: .975rem;
+}
+
+.ecz-vh {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ecz-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: .75rem 1.25rem;
+  background: var(--ecz-navy);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0 0 var(--ecz-radius-sm) 0;
+}
+.ecz-skip:focus { left: 0; }
+
+/* --------------------------------------------------------------------------
+   4. Buttons and links
+   -------------------------------------------------------------------------- */
+.ecz-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: var(--ecz-tap);
+  padding: .6rem 1.35rem;
+  border: 2px solid transparent;
+  border-radius: var(--ecz-radius-sm);
+  font: inherit;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.ecz-btn--primary { background: var(--ecz-blue); color: #fff; }
+.ecz-btn--primary:hover { background: var(--ecz-blue-dark); }
+
+.ecz-btn--accent { background: var(--ecz-amber); color: var(--ecz-navy); }
+.ecz-btn--accent:hover { background: var(--ecz-amber-dark); color: #fff; }
+
+.ecz-btn--ghost {
+  background: transparent;
+  color: var(--ecz-blue);
+  border-color: currentColor;
+}
+.ecz-btn--ghost:hover { background: var(--ecz-subtle); }
+
+.ecz-btn--on-dark {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255,255,255,.6);
+}
+.ecz-btn--on-dark:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+
+.ecz-link {
+  color: var(--ecz-blue);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  min-height: var(--ecz-tap);
+}
+.ecz-link:hover { color: var(--ecz-blue-dark); }
+
+.ecz-icon { flex: none; width: 1em; height: 1em; fill: none; stroke: currentColor;
+            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* --------------------------------------------------------------------------
+   5. Hero — search-first, static. No carousel (OQ-002, charter 5.2).
+      Caching: fully cacheable.
+   -------------------------------------------------------------------------- */
+.ecz-hero {
+  background:
+    radial-gradient(1200px 400px at 12% -20%, rgba(245,163,0,.20), transparent 60%),
+    linear-gradient(160deg, var(--ecz-navy) 0%, var(--ecz-blue) 100%);
+  color: #fff;
+  padding-block: clamp(2.5rem, 6vw, 4.25rem);
+}
+
+.ecz-hero__grid {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3rem);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+.ecz-hero h1 {
+  color: #fff;
+  font-size: clamp(1.75rem, 1.1rem + 2.6vw, 3rem);
+  letter-spacing: -.015em;
+  margin-bottom: .6rem;
+}
+
+.ecz-hero__lede {
+  color: rgba(255,255,255,.88);
+  font-size: clamp(1rem, .95rem + .3vw, 1.15rem);
+  max-width: 54ch;
+  margin-bottom: 1.5rem;
+}
+
+/* Search. Label is persistent and programmatically associated —
+   placeholder is not a label (standards/accessibility.md). */
+.ecz-search { max-width: 40rem; }
+
+.ecz-search__label {
+  display: block;
+  font-weight: 650;
+  font-size: .9rem;
+  margin-bottom: .45rem;
+  color: #fff;
+}
+
+.ecz-search__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  background: #fff;
+  padding: .4rem;
+  border-radius: var(--ecz-radius);
+  box-shadow: var(--ecz-shadow-lift);
+}
+
+.ecz-search__input {
+  flex: 1 1 12rem;
+  min-width: 0;
+  min-height: var(--ecz-tap);
+  padding: .5rem .85rem;
+  border: 0;
+  border-radius: var(--ecz-radius-sm);
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ecz-ink);
+  background: transparent;
+}
+.ecz-search__input::placeholder { color: #6b7684; }
+
+.ecz-search__hint {
+  margin: .6rem 0 0;
+  font-size: .875rem;
+  color: rgba(255,255,255,.82);
+}
+.ecz-search__hint code {
+  font-family: var(--ecz-font-mono);
+  font-size: .95em;
+  background: rgba(255,255,255,.14);
+  padding: .1em .4em;
+  border-radius: 4px;
+}
+
+/* Quick trade actions under the search */
+.ecz-hero__quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .625rem;
+  margin-top: 1.5rem;
+}
+
+.ecz-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: var(--ecz-tap);
+  padding: .45rem 1rem;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font-size: .925rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.ecz-chip:hover { background: rgba(255,255,255,.18); border-color: #fff; }
+
+/* Proof strip — factual, no superlatives (standards/seo-technical.md) */
+.ecz-hero__proof {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 2rem;
+  background: rgba(255,255,255,.2);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: var(--ecz-radius);
+  overflow: hidden;
+}
+
+.ecz-proof__item {
+  background: rgba(11,37,69,.55);
+  padding: .9rem 1rem;
+}
+.ecz-proof__n { display: block; font-size: 1.25rem; font-weight: 700; }
+.ecz-proof__t { display: block; font-size: .8125rem; color: rgba(255,255,255,.82); }
+
+/* --------------------------------------------------------------------------
+   6. Segment routing rails — DEC-001 Option 1
+      Caching: fully cacheable.
+   -------------------------------------------------------------------------- */
+.ecz-rails {
+  display: grid;
+  gap: var(--ecz-gap);
+  grid-template-columns: 1fr;
+}
+
+.ecz-rail {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--ecz-surface);
+  border: 1px solid var(--ecz-line);
+  border-radius: var(--ecz-radius);
+  box-shadow: var(--ecz-shadow);
+}
+
+.ecz-rail--trade { border-top: 4px solid var(--ecz-blue); }
+.ecz-rail--consumer { border-top: 4px solid var(--ecz-amber); }
+
+.ecz-rail__tag {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: .4rem;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ecz-muted);
+  margin-bottom: .6rem;
+}
+
+.ecz-rail__title { font-size: 1.25rem; margin-bottom: .35rem; }
+.ecz-rail__desc { color: var(--ecz-muted); font-size: .95rem; }
+
+.ecz-rail__list { margin: .25rem 0 1.25rem; display: grid; gap: .125rem; }
+.ecz-rail__list a {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  min-height: var(--ecz-tap);
+  padding: .35rem .5rem;
+  margin-inline: -.5rem;
+  border-radius: var(--ecz-radius-sm);
+  color: var(--ecz-ink);
+  text-decoration: none;
+  font-weight: 550;
+}
+.ecz-rail__list a:hover { background: var(--ecz-subtle); color: var(--ecz-blue); }
+.ecz-rail__list a .ecz-icon { color: var(--ecz-blue); }
+
+.ecz-rail__cta { margin-top: auto; }
+
+/* --------------------------------------------------------------------------
+   7. Category orientation
+      Caching: fully cacheable.
+   -------------------------------------------------------------------------- */
+.ecz-cats {
+  display: grid;
+  gap: var(--ecz-gap);
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+
+.ecz-cat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: 1.25rem;
+  background: var(--ecz-surface);
+  border: 1px solid var(--ecz-line);
+  border-radius: var(--ecz-radius);
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+.ecz-cat:hover { border-color: var(--ecz-blue); box-shadow: var(--ecz-shadow-lift); transform: translateY(-2px); }
+
+.ecz-cat__icon {
+  width: 2.5rem; height: 2.5rem;
+  display: grid; place-items: center;
+  border-radius: var(--ecz-radius-sm);
+  background: var(--ecz-subtle-2);
+  color: var(--ecz-blue);
+}
+.ecz-cat__icon .ecz-icon { width: 1.375rem; height: 1.375rem; }
+
+.ecz-cat__title { font-size: 1.0625rem; margin: 0; }
+
+/* Whole-card click target without nesting interactive elements */
+.ecz-cat__title a { color: inherit; text-decoration: none; }
+.ecz-cat__title a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.ecz-cat__title a:hover { color: var(--ecz-blue); }
+
+.ecz-cat__spec {
+  margin: 0;
+  font-size: .875rem;
+  color: var(--ecz-muted);
+  font-family: var(--ecz-font-mono);
+}
+
+.ecz-cat__count { margin: 0; font-size: .8125rem; color: var(--ecz-muted); }
+
+/* --------------------------------------------------------------------------
+   8. Brands — text-bearing links, never bare logos (standards/seo-technical.md)
+      Caching: fully cacheable.
+   -------------------------------------------------------------------------- */
+.ecz-brands {
+  display: grid;
+  gap: .75rem;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+}
+
+.ecz-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4.5rem;
+  padding: .75rem 1rem;
+  background: var(--ecz-surface);
+  border: 1px solid var(--ecz-line);
+  border-radius: var(--ecz-radius-sm);
+  color: var(--ecz-ink);
+  font-weight: 650;
+  text-align: center;
+  text-decoration: none;
+}
+.ecz-brand:hover { border-color: var(--ecz-blue); color: var(--ecz-blue); background: var(--ecz-subtle); }
+
+/* --------------------------------------------------------------------------
+   9. Trade tools band
+      Caching: fully cacheable. The account-state variant is hole-punched —
+      see design/README.md. Never cacheable="false".
+   -------------------------------------------------------------------------- */
+.ecz-tools {
+  background: linear-gradient(160deg, var(--ecz-navy), #133a68);
+  color: #fff;
+}
+.ecz-tools .ecz-section__title { color: #fff; }
+.ecz-tools .ecz-section__intro { color: rgba(255,255,255,.85); }
+
+.ecz-tools__grid {
+  display: grid;
+  gap: var(--ecz-gap);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.ecz-tool {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding: 1.5rem;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: var(--ecz-radius);
+}
+
+.ecz-tool h3 { color: #fff; font-size: 1.0625rem; margin: 0; }
+.ecz-tool p { color: rgba(255,255,255,.84); font-size: .9375rem; margin: 0 0 .5rem; }
+.ecz-tool .ecz-btn { align-self: flex-start; margin-top: auto; }
+.ecz-tool__icon { color: var(--ecz-amber); }
+.ecz-tool__icon .ecz-icon { width: 1.5rem; height: 1.5rem; }
+
+/* --------------------------------------------------------------------------
+   10. Trust signals — substantiable claims only
+       Caching: fully cacheable.
+   -------------------------------------------------------------------------- */
+.ecz-trust {
+  display: grid;
+  gap: var(--ecz-gap);
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.ecz-trust__item {
+  display: flex;
+  gap: .875rem;
+  align-items: flex-start;
+}
+
+.ecz-trust__icon {
+  flex: none;
+  width: 2.25rem; height: 2.25rem;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--ecz-subtle-2);
+  color: var(--ecz-blue);
+}
+.ecz-trust__icon .ecz-icon { width: 1.25rem; height: 1.25rem; }
+
+.ecz-trust__item h3 { font-size: 1rem; margin: 0 0 .2rem; }
+.ecz-trust__item p { font-size: .9rem; color: var(--ecz-muted); margin: 0; }
+
+/* --------------------------------------------------------------------------
+   11. Guidance — serves AUD-6 / AUD-7
+       Caching: fully cacheable.
+   -------------------------------------------------------------------------- */
+.ecz-guides {
+  display: grid;
+  gap: var(--ecz-gap);
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+}
+
+.ecz-guide {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.35rem;
+  background: var(--ecz-surface);
+  border: 1px solid var(--ecz-line);
+  border-left: 4px solid var(--ecz-amber);
+  border-radius: var(--ecz-radius-sm);
+}
+
+.ecz-guide__kicker {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ecz-warn);
+  margin-bottom: .4rem;
+}
+
+.ecz-guide h3 { font-size: 1.0625rem; margin: 0 0 .35rem; }
+.ecz-guide h3 a { color: inherit; text-decoration: none; }
+.ecz-guide h3 a::after { content: ""; position: absolute; inset: 0; }
+.ecz-guide h3 a:hover { color: var(--ecz-blue); }
+.ecz-guide p { font-size: .9rem; color: var(--ecz-muted); margin: 0; }
+
+/* --------------------------------------------------------------------------
+   12. SEO content region — must be useful to a reader
+       Caching: fully cacheable.
+   -------------------------------------------------------------------------- */
+.ecz-about__grid {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: 1fr;
+}
+.ecz-about p { color: var(--ecz-muted); max-width: 68ch; }
+.ecz-about h3 { font-size: 1.0625rem; margin-top: 1.25rem; }
+
+.ecz-about__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.25rem;
+}
+.ecz-about__links a { font-size: .925rem; }
+
+/* --------------------------------------------------------------------------
+   13. Breakpoints. Verified for 320px reflow with no horizontal scroll.
+   -------------------------------------------------------------------------- */
+@media (min-width: 30rem) {
+  .ecz-hero__proof { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (min-width: 48rem) {
+  .ecz-rails { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ecz-about__grid { grid-template-columns: 1.6fr 1fr; }
+}
+
+@media (min-width: 62rem) {
+  .ecz-hero__grid { grid-template-columns: 1.15fr .85fr; }
+}
+
+/* --------------------------------------------------------------------------
+   14. Preferences and print
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .ecz-body *,
+  .ecz-body *::before,
+  .ecz-body *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ecz-cat:hover { transform: none; }
+}
+
+@media (prefers-contrast: more) {
+  .ecz-body { --ecz-muted: #3b444f; --ecz-line: #9aa4b1; }
+}
+
+@media print {
+  .ecz-hero, .ecz-tools { background: #fff !important; color: #000 !important; }
+  .ecz-hero h1, .ecz-tools .ecz-section__title { color: #000 !important; }
+  .ecz-btn, .ecz-chip { border: 1px solid #000 !important; color: #000 !important; background: none !important; }
+}
